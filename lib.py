@@ -24,7 +24,7 @@ def groups(words):
 
 def query_domain(domains):
     for domain in domains.split():
-        results = [result for result in getoutput('nslookup %s 8.8.8.8' % domain).split('\n') if result.startswith('** server can') and !result.endswith('fail')]
+        results = [result for result in getoutput('nslookup %s 8.8.8.8' % domain).split('\n') if result.startswith('** server can') and !result.endswith('FAIL')]
         for result in results:
             return result
 
