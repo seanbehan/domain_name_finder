@@ -23,14 +23,15 @@ def groups(words):
     return sorted(groups, key=lambda ary: len(''.join(ary)), reverse=False)
 
 def query_domain(domains):
-    results = [result for result in getoutput('whois %s' % domains).split('\n') if result.startswith('No match')]
-    for result in results:
-        return result
+    for domain in domains.split():
+        results = [result for result in getoutput('nslookup %s 8.8.8.8' % domain).split('\n') if result.startswith('** server can')]
+        for result in results:
+            return result
 
 def domains(url):
     for g in groups(words_from_url(url)):
-        x = query_domain(' '.join(['%s.com' % w for w in [''.join(w) for w in list(permutations(g))]]))
+        x = query_domain(' '.join(['%s.com' % (w) for w in [''.join(w) for w in list(permutations(g))]]))
         if x:
-            yield "%s<br>" % x
+            yield x + '<br>'
         else:
             yield ''
