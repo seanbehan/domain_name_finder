@@ -6,9 +6,7 @@ import marshal
 from random import shuffle
 from jinja2 import Template
 
-words = dict(stopwords=marshal.loads(open("stopwords.marshal").read()))
-
-def tranform_url(url):
+def transform_url(url):
     if url.startswith('http'):
         return url
     return 'http://%s' % url
@@ -17,7 +15,7 @@ def stopwords():
     return marshal.loads(open("stopwords.marshal").read())
 
 def words_from_url(url):
-    url = tranform_url(url)
+    url = transform_url(url)
 
     page = requests.get(url, verify=False)
     doc = html.fromstring(page.text)
