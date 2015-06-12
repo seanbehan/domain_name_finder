@@ -5,11 +5,18 @@ from itertools import permutations
 import marshal
 from random import shuffle
 from jinja2 import Template
+import urlparse
 
 def transform_url(url):
-    if url.startswith('http'):
-        return url
-    return 'http://%s' % url
+    _url = urlparse.urlparse(url)
+    if '' == _url.scheme:
+        try:
+            https_url = 'https://%s' % url
+            requests.head(https_url)
+            return https_url
+        except:
+            return 'http://%s' % url
+    return url
 
 def stopwords():
     return marshal.loads(open("stopwords.marshal").read())
