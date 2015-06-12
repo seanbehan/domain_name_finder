@@ -1,11 +1,13 @@
 from flask import Flask, Response, request
+from jinja2 import Template
 from lib import domains
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "<form method='get' action='/results'><input type='text' name='url' placeholder='http://...'><button>Go</button></form>"
+    t = Template(open('home.html').read())
+    return t.render(domain="")
 
 @app.route("/results")
 def results():
