@@ -37,7 +37,7 @@ def words_from_url(url):
 
     return list(words)
 
-def groups(words):
+def in_groups(words):
     words = list(set(words) - set(stopwords()))
     shuffle(words)
     groups = zip(*(iter(words),) * 2)
@@ -56,7 +56,7 @@ def domains(url):
 
     i = 0
 
-    for g in groups(words_from_url(url)):
+    for g in in_groups(words_from_url(url)):
         if i == 0:
             yield t2.render(domain=url)
             i+=1
